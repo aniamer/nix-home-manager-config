@@ -7,7 +7,7 @@ in
   enable = true;
   package = pkgsMaster.gitAndTools.gitFull;
   userName = "frekw";
-  userEmail = "fredrik@warnsberg.se";
+  userEmail = "ani@soundtrackyourbrand.com";
   ignores = [
    ".cache/"
     ".DS_Store"
@@ -37,7 +37,7 @@ in
   };
 
   signing = {
-    key = "456E7B9AD00B512DFF44ACC5F7CA7570539B75D1";
+    key = "948120FBAAC862A0";
     signByDefault = true;
   };
 
