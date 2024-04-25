@@ -6,7 +6,7 @@ in
 {
   enable = true;
   package = pkgsMaster.gitAndTools.gitFull;
-  userName = "frekw";
+  userName = "aniamer";
   userEmail = "ani@soundtrackyourbrand.com";
   ignores = [
    ".cache/"

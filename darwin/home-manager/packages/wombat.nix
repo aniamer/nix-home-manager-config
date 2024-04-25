@@ -13,7 +13,7 @@
    '';
  
    src = fetchurl {
-     name = "Firefox-${version}.dmg";
+     name = "Wombat-${version}.dmg";
      url = "https://github.com/rogchap/wombat/releases/download/v0.5.0/Wombat_v0.5.0_Darwin_x86_64.dmg";
      sha256 = "sha256-plX3el5Vsfvqf0hV2NU2xS1wG9sax8Rm4eVlaiCEIb8=";
    };

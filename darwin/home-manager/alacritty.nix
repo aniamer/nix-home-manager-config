@@ -98,17 +98,17 @@
 
     font = {
       normal = {
-        family = "FiraCode Nerd Font";
+        family = "Monaspace Neon";
         style = "Retina";
       };
 
       bold = {
-        family = "FiraCode Nerd Font";
+        family = "Monaspace Neon";
         style = "Bold";
       };
 
       italic = {
-        family = "FiraCode Nerd Font";
+        family = "Monaspace Neon";
         style = "Light";
       };
 

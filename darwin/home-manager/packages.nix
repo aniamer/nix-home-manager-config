@@ -1,119 +1,103 @@
 { unstable, pkgs }:
 
 let
-# pkgsMaster = import (fetchTarball "https://github.com/nixos/nixpkgs/archive/master.tar.gz") {};
-altair = pkgs.callPackage ./packages/altair.nix {};
-# appLauncher = pkgs.callPackage ./packages/app.nix {};
-kubent = pkgs.callPackage ./packages/kubent.nix {};
-obsidian = pkgs.callPackage ./packages/obsidian.nix {};
-syb-cli = pkgs.callPackage ./packages/syb-cli.nix {};
-sloth = pkgs.callPackage ./packages/sloth.nix {};
-adr = pkgs.callPackage ./packages/adr.nix {};
-vlc = pkgs.callPackage ./packages/vlc.nix {};
-wombat = pkgs.callPackage ./packages/wombat.nix {};
-tunnelblick = pkgs.callPackage ./packages/tunnelblick.nix {};
+  # pkgsMaster = import (fetchTarball "https://github.com/nixos/nixpkgs/archive/master.tar.gz") {};
+  altair = pkgs.callPackage ./packages/altair.nix { };
+  # appLauncher = pkgs.callPackage ./packages/app.nix {};
+  kubent = pkgs.callPackage ./packages/kubent.nix { };
+  obsidian = pkgs.callPackage ./packages/obsidian.nix { };
+  syb-cli = pkgs.callPackage ./packages/syb-cli.nix { };
+  sloth = pkgs.callPackage ./packages/sloth.nix { };
+  adr = pkgs.callPackage ./packages/adr.nix { };
+  vlc = pkgs.callPackage ./packages/vlc.nix { };
+  wombat = pkgs.callPackage ./packages/wombat.nix { };
+  tunnelblick = pkgs.callPackage ./packages/tunnelblick.nix { };
+  pants = pkgs.callPackage ./packages/pants.nix { };
+  fonts = with pkgs; [ fira-code monaspace ];
 
+  gitTools = with pkgs; [
+    delta
+    diff-so-fancy
+    git-absorb
+    git-branchless
+    git-codeowners
+    git-open
+    git-ps-rs
+    spr
+    nodePackages_latest.graphite-cli
+  ];
 
-fonts = with pkgs; [
-  fira-code
-  (nerdfonts.override { fonts = ["FiraCode"]; })
-];
+  nixTools = with pkgs; [ cachix ];
 
-gitTools = with pkgs; [
-  delta
-  diff-so-fancy
-  git-absorb
-  git-branchless
-  git-codeowners
-  git-open
-  git-ps-rs
-  spr
-  nodePackages_latest.graphite-cli
-];
+  jsPackages = with pkgs; [ bun deno nodejs_latest ];
 
-nixTools = with pkgs; [
-  cachix
-];
+  k8sPackages = with pkgs; [
+    # kubenti
+    unstable.fluxcd
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin-darwin-arm
+      pkgs.google-cloud-sdk.components.bigtable
+      pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin
+    ])
+    krew
+    kubectl
+    kubectx
+    kubernetes-helm
+    kustomize
+    microplane
+    podman
+    podman-compose
+    (pkgs.writeShellScriptBin "docker" "exec -a $0 ${podman}/bin/podman $@")
+    qemu
+    rancher
+    sloth
+    terraform
+  ];
 
-ocamlPackages = with pkgs; [
-  opam
-  ocaml-ng.ocamlPackages_5_0.dune_3
-  ocaml-ng.ocamlPackages_5_0.ocaml
-  ocaml-ng.ocamlPackages.ocaml-lsp
-  ocaml-ng.ocamlPackages_5_0.reason
+  homePackages = with pkgs; [
+    # adr
+    altair
+    # appLauncher
+    bash
+    bat
+    clang-tools
+    cmake
+    fd
+    ffmpeg
+    gopls
+    go-outline
+    # graalvm19-ce
+    grpcurl
+    httpie
+    jq
+    keybase
+    # mkchromecast
+    ninja
+    nixfmt
+    obsidian
+    python3
+    reattach-to-user-namespace
+    rectangle
+    ripgrep
+    rnix-lsp
+    ruby
+    scala
+    slack
+    syb-cli
+    # sqlitebrowser
+    tree
+    tunnelblick
+    yarn
+    yq-go
+    youtube-dl
+    # openjdk17
+    vlc
+    wombat
+    zlib
+    _1password-gui
+    spicedb-zed
+    protobuf3_20
+    pants
+  ];
 
-  pkg-config
-  libev
-];
-
-jsPackages = with pkgs; [
-  bun
-  deno
-  nodejs_latest
-];
-
-k8sPackages = with pkgs; [
-  # kubent
-  fluxcd
-  (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin-darwin-arm pkgs.google-cloud-sdk.components.bigtable pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin])
-  krew
-  kubectl
-  kubectx
-  kubernetes-helm
-  kustomize
-  microplane
-  podman
-  podman-compose
-  (pkgs.writeShellScriptBin "docker" "exec -a $0 ${podman}/bin/podman $@")
-  qemu
-  rancher
-  sloth
-  terraform
-];
-
-homePackages = with pkgs; [
-  # adr
-  altair
-  # appLauncher
-  bash
-  bat
-  bazel
-  clang-tools
-  cmake
-  elixir
-  fd
-  ffmpeg
-  gopls
-  go-outline
-  # graalvm19-ce
-  grpcurl
-  httpie
-  jq
-  keybase
-  # mkchromecast
-  mplayer
-  ninja
-  nixfmt
-  obsidian
-  python3
-  reattach-to-user-namespace
-  rectangle
-  ripgrep
-  rnix-lsp
-  ruby
-  scala
-  slack
-  syb-cli
-  # sqlitebrowser
-  tree
-  tunnelblick
-  yarn
-  yq-go
-  youtube-dl
-  # openjdk17
-  vlc
-  wombat
-  zlib
-];
-
-in fonts ++ homePackages ++ gitTools ++ nixTools ++ ocamlPackages ++ jsPackages ++ k8sPackages
+in fonts ++ homePackages ++ gitTools ++ nixTools ++ jsPackages ++ k8sPackages
